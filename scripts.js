@@ -109,6 +109,28 @@ function textObj(string, x, y, font, color, textAlign) {
 	objects.push(this);
 }
 
+function imageObj(x, y, src) {
+	this.x = x;
+	this.y = y;
+	this.src = src;
+	this.growXv = 0;
+	this.growYv = 0;
+	this.Xv = 0;
+	this.Yv = 0;
+    this.image = new Image();
+    this.image.src = this.src;
+	this.update = function() {  
+        ctx.drawImage(this.image, this.x, this.y);
+	}
+	this.moveByVelocity = function() {
+		this.Xv += this.growXv;
+		this.Yv += this.growYv;
+		this.x += this.Xv;
+		this.y += this.Yv;
+	}
+	objects.push(this);
+}
+
 function updateAll() {
 	clearAll();
 	for (var i = 0; i < objects.length; i++) {
@@ -134,3 +156,11 @@ function convertToPercent(type, number) {
         return number / canvas.height * 100;
     }
 }
+
+new rect(0, 0, 100, 100, "black");
+
+function game() {
+    updateAll();
+}
+
+var gameLoop = setInterval(game, 50);
