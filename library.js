@@ -2,16 +2,6 @@ var canvas = document.getElementById("viewport");
 var aspectRatio = [2, 1];
 var viewportWidth;
 var viewportHeight;
-var aspectRatioOne = aspectRatio[0];
-var aspectRatioTwo = aspectRatio[1];
-viewportWidth = window.innerWidth;
-viewportHeight = aspectRatio[1] / aspectRatio[0] * viewportWidth;
-while (viewportHeight > window.innerHeight) {
-    viewportWidth = viewportWidth / 1.05;
-    viewportHeight = viewportHeight / 1.05;
-}
-canvas.width = viewportWidth;
-canvas.height = viewportHeight;
 var ctx = canvas.getContext("2d");
 var objects = [];
 
@@ -22,6 +12,17 @@ magentaGradient.addColorStop(1, "blue");
 var magentaGradientTwo = ctx.createLinearGradient(200, 0, 200, 600);
 magentaGradientTwo.addColorStop(0, "magenta");
 magentaGradientTwo.addColorStop(1, "#00D0FF");
+
+function resizeCanvas() {
+    viewportWidth = window.innerWidth;
+    viewportHeight = aspectRatio[1] / aspectRatio[0] * viewportWidth;
+    while (viewportHeight > window.innerHeight) {
+        viewportWidth = viewportWidth / 1.05;
+        viewportHeight = viewportHeight / 1.05;
+    }
+    canvas.width = viewportWidth;
+    canvas.height = viewportHeight;
+}
 
 function clearAll() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -109,9 +110,11 @@ function textObj(string, x, y, font, color, textAlign) {
 	objects.push(this);
 }
 
-function imageObj(x, y, src) {
+function imageObj(x, y, width, height, src) {
 	this.x = x;
 	this.y = y;
+    this.width = width;
+    this.height = height;
 	this.src = src;
 	this.growXv = 0;
 	this.growYv = 0;
@@ -122,7 +125,9 @@ function imageObj(x, y, src) {
 	this.update = function() {
         this.pixelX = this.x * (canvas.width / 100);
         this.pixelY = this.y * (canvas.height / 100);
-        ctx.drawImage(this.image, this.pixelX, this.pixelY);
+        this.pixelWidth = this.width * (canvas.width / 100);
+        this.pixelHeight = this.height * (canvas.height / 100);
+        ctx.drawImage(this.image, this.pixelX, this.pixelY, this.pixelWidth, this.pixelHeight);
 	}
 	this.moveByVelocity = function() {
 		this.Xv += this.growXv;
@@ -135,6 +140,7 @@ function imageObj(x, y, src) {
 
 function updateAll() {
 	clearAll();
+    resizeCanvas();
 	for (var i = 0; i < objects.length; i++) {
 		objects[i].update();
 	}
