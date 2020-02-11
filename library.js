@@ -28,6 +28,10 @@ function clearAll() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function clearObjects() {
+    objects = [];
+}
+
 function rect(x, y, width, height, color) {
 	this.x = x;
 	this.y = y;
@@ -148,6 +152,15 @@ function updateAll() {
 
 function inside(x, y, object) {
     if (x > object.x && y > object.y && x < object.x + object.width && y < object.y + object.height) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function insideObject(object1, object2) {
+    if (object1.x + object1.width > object2.x && object1.y + object1.height > object2.y && object1.x < object2.x + object2.width && object1.y < object2.y + object2.height) {
         return true;
     }
     else {
