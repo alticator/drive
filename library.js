@@ -159,8 +159,17 @@ function inside(x, y, object) {
     }
 }
 
-function insideObject(object1, object2) {
+function objectCollision(object1, object2) {
     if (object1.x + object1.width > object2.x && object1.y + object1.height > object2.y && object1.x < object2.x + object2.width && object1.y < object2.y + object2.height) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function insideObject(object1, object2) {
+    if (object1.x > object2.x && object1.y > object2.y && object1.x + object1.width < object2.x + object2.width && object1.y + object1.height < object2.y + object2.height) {
         return true;
     }
     else {
@@ -175,4 +184,8 @@ function convertToPercent(type, number) {
     else if (type == "height") {
         return number / canvas.height * 100;
     }
+}
+
+function random(a, b) {
+	return Math.floor(Math.random() * (b - a)) + a;
 }
