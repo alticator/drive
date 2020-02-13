@@ -6,6 +6,9 @@ document.addEventListener("keyup", keyUp);
 road.Xv = 0.1;
 var obstacle = new rect(-10, -10, 5, 5, "red");
 var obstacleX = 0;
+var score = 0;
+var scoreBoardBackground = new rect(0, 0, 10, 10, "rgba(255, 255, 255, 0.5)");
+var scoreBoard = new textObj("Score: " + Math.floor(score), 5, 5, "24px Arial", "white", "center");
 obstacle.Yv = 0.2;
 
 function keyPress(event) {
@@ -27,7 +30,7 @@ function keyUp(event) {
 function gameOver(message) {
     clearObjects();
     new textObj("Game Over", 20, 20, "36px Arial", "#00D0FF", "left");
-    new textObj(message, 20, 40, "italic 24px Arial", "black", "left");
+    new textObj("Score: " + Math.floor(score) + " - " + "Reason of Game Over: " + message, 20, 40, "italic 24px Arial", "black", "left");
     updateAll();
 }
 
@@ -57,6 +60,8 @@ function game() {
         clearInterval(gameLoop);
         gameOver("You hit an obstacle");
     }
+    score += 0.1;
+    scoreBoard.string = "Score: " + Math.floor(score);
 }
 
 var gameLoop = setInterval(game, 20);
