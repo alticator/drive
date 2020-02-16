@@ -22,6 +22,15 @@ function resizeCanvas() {
     }
     canvas.width = viewportWidth;
     canvas.height = viewportHeight;
+    
+    // Resize Gradients
+    magentaGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    magentaGradient.addColorStop(0, "magenta");
+    magentaGradient.addColorStop(1, "blue");
+
+    magentaGradientTwo = ctx.createLinearGradient(200, 0, 200, 600);
+    magentaGradientTwo.addColorStop(0, "magenta");
+    magentaGradientTwo.addColorStop(1, "#00D0FF");
 }
 
 function clearAll() {
