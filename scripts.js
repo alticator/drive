@@ -43,7 +43,7 @@ function gameMenu() {
     clearObjects();
     gameMenuBackground = new rect(0, 0, 100, 100, magentaGradient);
     gameMenuContainer = new rect(10, 10, 80, 80, "rgba(255, 255, 255, 0.5)");
-    gameMenuText = new textObj("Alticator Drive 2", 12, 12 + convertToPercent("height", 36), "36px Arial", "white", "left");
+    gameMenuText = new textObj("Alticator Drive 3", 12, 12 + convertToPercent("height", 36), "36px Arial", "white", "left");
     gameMenuButton = new rect(10, 50, 80, 10, "#00d0ff");
     gameMenuButtonText = new textObj("Start Game", 12, 50 + convertToPercent("height", 24) * 1.5, "24px Arial", "white", "left");
     if (inside(mouseX, mouseY, gameMenuButton) && mouseDown) {
@@ -68,13 +68,13 @@ function gameInit() {
     obstacle = 0;
     debugMessage("gameInit()");
     clearObjects();
-    background = new rect(0, 0, 100, 100, "green");
-    road = new rect(40, 0, 20, 100, "gray");
+    background = new imageObj(0, 0, 100, 100, "background.png");
+    road = new imageObj(40, 0, 20, 100, "road.png");
     car = new imageObj(50, 50, convertToPercent("width", 47), convertToPercent("height", 67), "car.png");
     document.onkeydown = keyPress;
     document.addEventListener("keyup", keyUp);
     road.Xv = 0.1;
-    obstacle = new rect(-10, -10, 5, 5, "red");
+    obstacle = new imageObj(-10, -10, 5, 5, "obstacle.png");
     obstacleX = 0;
     score = 0;
     scoreBoardBackground = new rect(0, 0, 10, 10, "rgba(255, 255, 255, 0.5)");
