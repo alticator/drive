@@ -6,6 +6,7 @@ var gameMenuBackground;
 var gameMenuContainer;
 var gameMenuButton;
 var gameMenuButtonText;
+var gameMenuScoreBoard;
 var mouseX;
 var mouseY;
 document.onmousemove = mouseMove;
@@ -46,6 +47,9 @@ function gameMenu() {
     gameMenuText = new textObj("Alticator Drive 3", 12, 12 + convertToPercent("height", 36), "36px Arial", "white", "left");
     gameMenuButton = new rect(10, 50, 80, 10, "#00d0ff");
     gameMenuButtonText = new textObj("Start Game", 12, 50 + convertToPercent("height", 24) * 1.5, "24px Arial", "white", "left");
+    if (score !== undefined) {
+        gameMenuScoreBoard = new textObj("Score: " + Math.floor(score), 70, 15, "24px Arial", "white", "left");
+    }
     if (inside(mouseX, mouseY, gameMenuButton) && mouseDown) {
         clearInterval(gameMenuLoop);
         gameInit();
