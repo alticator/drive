@@ -46,7 +46,7 @@ function gameMenu() {
     gameMenuBackground = new rect(0, 0, 100, 100, magentaGradient);
     gameMenuTitle = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
     gameMenuContainer = new rect(10, 15, 80, 20, "rgba(255, 255, 255, 0.5)");
-    gameMenuText = new textObj("Alticator Drive 6", 2, 5, "3vh Arial", "white", "left");
+    gameMenuText = new textObj("Alticator Drive 6.1", 2, 5, "3vh Arial", "white", "left");
     gameMenuButton = new rect(10, 40, 80, 20, "#00d0ff");
     gameMenuButtonText = new textObj("Start Game", 50, 55, "10vh Arial", "white", "center");
     gameMenuScoreBoard = new textObj("Welcome", 50, 30, "10vh Arial", "white", "center");
@@ -164,7 +164,9 @@ function game() {
         gameOver("You hit an obstacle");
     }
     if (objectCollision(car, scoreBox)) {
-        score += 1;
+        score += 20;
+        scoreBoxX = random(0, 15);
+        scoreBox.y = -10;
     }
     score += 0.1;
     scoreBoard.string = "Score: " + Math.floor(score);
