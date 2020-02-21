@@ -16,10 +16,10 @@ document.onmousedown = mouseDown;
 mouseDown = false;
 
 if (debuggingMode == 1) {
-    console.log("Debuggging Mode ON");
+    console.log("Debugging Mode ON");
 }
 else {
-    console.log("Debuggging Mode OFF");
+    console.log("Debugging Mode OFF");
 }
 
 function mouseUp(event) {
@@ -46,7 +46,7 @@ function gameMenu() {
     gameMenuBackground = new rect(0, 0, 100, 100, magentaGradient);
     gameMenuTitle = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
     gameMenuContainer = new rect(10, 15, 80, 20, "rgba(255, 255, 255, 0.5)");
-    gameMenuText = new textObj("Alticator Drive 5", 2, 5, "3vh Arial", "white", "left");
+    gameMenuText = new textObj("Alticator Drive 6", 2, 5, "3vh Arial", "white", "left");
     gameMenuButton = new rect(10, 40, 80, 20, "#00d0ff");
     gameMenuButtonText = new textObj("Start Game", 50, 55, "10vh Arial", "white", "center");
     gameMenuScoreBoard = new textObj("Welcome", 50, 30, "10vh Arial", "white", "center");
@@ -66,6 +66,8 @@ var road;
 var car;
 var obstacle;
 var obstacleX;
+var scoreBox;
+var scoreBoxX;
 var score;
 var scoreBoardBackground;
 var scoreBoard;
@@ -79,6 +81,8 @@ function gameInit() {
     background = new imageObj(0, 0, 100, 100, "background.png");
     ground = new rect(0, 50, 100, 50, "green");
     road = new imageObj(40, 50, 20, 50, "road.png");
+    scoreBox = new imageObj(-10, -10, 2.5, 5, "score.png");
+    scoreBoxX = 10;
     car = new imageObj(50, 90, 5, 8, "car.png");
     document.onkeydown = keyPress;
     document.addEventListener("keyup", keyUp);
@@ -89,6 +93,7 @@ function gameInit() {
     scoreBoardBackground = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
     scoreBoard = new textObj("Score: " + Math.floor(score), 50, 6, "5vh Arial", "white", "center");
     obstacle.Yv = 0.4;
+    scoreBox.Yv = 0.4;
     updateAll();
     gameLoop = setInterval(game, 20);
 }
@@ -130,9 +135,6 @@ function gameOver(message) {
 function game() {
     debugMessage("game()");
     updateAll();
-    car.moveByVelocity();
-    road.moveByVelocity();
-    obstacle.moveByVelocity();
     if (road.x > 80) {
         road.Xv = -0.1;
     }
@@ -150,9 +152,19 @@ function game() {
     else {
         obstacle.x = road.x + obstacleX;
     }
+    if (scoreBox.y > 100) {
+        scoreBoxX = random(0, 15);
+        scoreBox.y = -10;
+    }
+    else {
+        scoreBox.x = road.x + scoreBoxX;
+    }
     if (objectCollision(car, obstacle)) {
         clearInterval(gameLoop);
         gameOver("You hit an obstacle");
+    }
+    if (objectCollision(car, scoreBox)) {
+        score += 1;
     }
     score += 0.1;
     scoreBoard.string = "Score: " + Math.floor(score);
