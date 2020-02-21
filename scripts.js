@@ -7,6 +7,7 @@ var gameMenuContainer;
 var gameMenuButton;
 var gameMenuButtonText;
 var gameMenuScoreBoard;
+var gameMenuTitle;
 var mouseX;
 var mouseY;
 document.onmousemove = mouseMove;
@@ -43,12 +44,14 @@ function gameMenu() {
     debugMessage("gameMenu()");
     clearObjects();
     gameMenuBackground = new rect(0, 0, 100, 100, magentaGradient);
-    gameMenuContainer = new rect(10, 10, 80, 80, "rgba(255, 255, 255, 0.5)");
-    gameMenuText = new textObj("Alticator Drive 4", 12, 12 + convertToPercent("height", 36), "36px Arial", "white", "left");
-    gameMenuButton = new rect(10, 50, 80, 10, "#00d0ff");
-    gameMenuButtonText = new textObj("Start Game", 12, 50 + convertToPercent("height", 24) * 1.5, "24px Arial", "white", "left");
+    gameMenuTitle = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
+    gameMenuContainer = new rect(10, 15, 80, 20, "rgba(255, 255, 255, 0.5)");
+    gameMenuText = new textObj("Alticator Drive 5", 2, 5, "3vh Arial", "white", "left");
+    gameMenuButton = new rect(10, 40, 80, 20, "#00d0ff");
+    gameMenuButtonText = new textObj("Start Game", 50, 55, "10vh Arial", "white", "center");
+    gameMenuScoreBoard = new textObj("Welcome", 50, 30, "10vh Arial", "white", "center");
     if (score !== undefined) {
-        gameMenuScoreBoard = new textObj("Score: " + Math.floor(score), 70, 15, "24px Arial", "white", "left");
+        gameMenuScoreBoard.string = "Score: " + Math.floor(score);
     }
     if (inside(mouseX, mouseY, gameMenuButton) && mouseDown) {
         clearInterval(gameMenuLoop);
@@ -83,9 +86,9 @@ function gameInit() {
     obstacle = new imageObj(-10, -10, 5, 5, "obstacle.png");
     obstacleX = 0;
     score = 0;
-    scoreBoardBackground = new rect(0, 0, 10, 10, "rgba(255, 255, 255, 0.5)");
-    scoreBoard = new textObj("Score: " + Math.floor(score), 5, 5, "24px Arial", "white", "center");
-    obstacle.Yv = 0.2;
+    scoreBoardBackground = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
+    scoreBoard = new textObj("Score: " + Math.floor(score), 50, 6, "5vh Arial", "white", "center");
+    obstacle.Yv = 0.4;
     updateAll();
     gameLoop = setInterval(game, 20);
 }
