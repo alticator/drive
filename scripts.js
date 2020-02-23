@@ -46,7 +46,7 @@ function gameMenu() {
     gameMenuBackground = new rect(0, 0, 100, 100, magentaGradient);
     gameMenuTitle = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
     gameMenuContainer = new rect(10, 15, 80, 20, "rgba(255, 255, 255, 0.5)");
-    gameMenuText = new textObj("Alticator Drive 6.1", 2, 5, "3vh Arial", "white", "left");
+    gameMenuText = new textObj("Alticator Drive 7", 2, 5, "3vh Arial", "white", "left");
     gameMenuButton = new rect(10, 40, 80, 20, "#00d0ff");
     gameMenuButtonText = new textObj("Start Game", 50, 55, "10vh Arial", "white", "center");
     gameMenuScoreBoard = new textObj("Welcome", 50, 30, "10vh Arial", "white", "center");
@@ -72,6 +72,11 @@ var score;
 var scoreBoardBackground;
 var scoreBoard;
 var gameLoop;
+var buildingOne;
+var buildingTwo;
+var i;
+var buildingVelocity;
+var buildingMove;
 
 function gameInit() {
     car = 0;
@@ -80,22 +85,27 @@ function gameInit() {
     clearObjects();
     background = new imageObj(0, 0, 100, 100, "background.png");
     ground = new rect(0, 50, 100, 50, "green");
-    road = new imageObj(40, 50, 20, 50, "road.png");
+    buildingOne = new imageObj(0, 0, 100, 100, "building_left.png");
+    buildingTwo = new imageObj(0, 0, 100, 100, "building_right.png");
+    road = new imageObj(40, 50, 40, 50, "road.png");
     scoreBox = new imageObj(-10, -10, 2.5, 5, "score.png");
     scoreBoxX = 10;
     car = new imageObj(50, 90, 5, 8, "car.png");
     document.onkeydown = keyPress;
     document.addEventListener("keyup", keyUp);
     road.Xv = 0.1;
-    obstacle = new imageObj(-10, -10, 5, 5, "obstacle.png");
+    obstacle = new imageObj(-10, -10, 10, 5, "obstacle.png");
     obstacleX = 0;
     score = 0;
     scoreBoardBackground = new rect(0, 0, 100, 10, "rgba(255, 255, 255, 0.5)");
     scoreBoard = new textObj("Score: " + Math.floor(score), 50, 6, "5vh Arial", "white", "center");
-    obstacle.Yv = 0.4;
+    obstacle.Yv = 1;
     scoreBox.Yv = 0.4;
     updateAll();
     gameLoop = setInterval(game, 20);
+    i = 20;
+    buildingVelocity = 1;
+    buildingMove = true;
 }
 
 function keyPress(event) {
@@ -103,8 +113,7 @@ function keyPress(event) {
         car.Xv = -0.5;
     }
     else if (event.key == "ArrowRight") {
-        car.Xv = 0.5;
-        
+        car.Xv = 0.5;  
     }
 }
 
@@ -135,10 +144,10 @@ function gameOver(message) {
 function game() {
     debugMessage("game()");
     updateAll();
-    if (road.x > 80) {
+    if (road.x > 60) {
         road.Xv = -0.1;
     }
-    if (road.x < 0) {
+    if (road.x < 40) {
         road.Xv = 0.1;
     }
     if (insideObject(car, road) == false) {
@@ -168,6 +177,22 @@ function game() {
         scoreBoxX = random(0, 15);
         scoreBox.y = -10;
     }
+    if (buildingMove == true) {
+		buildingOne.x = road.x + road.width / 2 - i / 2;
+        buildingOne.y = 50 - i / 2;
+		buildingOne.width = i;
+		buildingOne.height = i;
+		buildingTwo.x = road.x + road.width / 2 - i / 2;
+        buildingTwo.y = 50 - i / 2;
+		buildingTwo.width = i;
+		buildingTwo.height = i;
+		buildingVelocity += 0.25;
+		i += buildingVelocity;
+		if (i > 500) {
+			i = 20;
+			buildingVelocity = 1;
+		}
+	}
     score += 0.1;
     scoreBoard.string = "Score: " + Math.floor(score);
 }
